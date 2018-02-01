@@ -1,0 +1,345 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+<!--parent>
+	<groupId>com.ca.security.imag</groupId>  
+	<artifactId>Virtual_Appliance_IMAG</artifactId>  
+        <version>1.0</version>
+</parent-->
+
+    <modelVersion>4.0.0</modelVersion>
+	
+	
+    <groupId>com.ca.security.imag.docker-deploy</groupId>
+    <artifactId>imps-data</artifactId>
+    <version>1.0.1-SNAPSHOTS</version>
+
+    
+	<build>
+	 
+	
+   	
+   <plugins>
+   <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+	<artifactId>properties-maven-plugin</artifactId>
+	<version>1.0-alpha-2</version>
+    <executions>
+      <execution>
+        <phase>test</phase>
+        <goals>
+          <goal>read-project-properties</goal>
+        </goals>
+        <configuration>
+          <files>
+            <file>../../docker-build.properties</file>
+          </files>
+        </configuration>
+      </execution>
+    </executions>
+  </plugin>
+  
+  <plugin>
+  <artifactId>maven-antrun-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>generate-sources</id>
+      <phase>test</phase>
+      <configuration>
+        <tasks>
+		
+		
+			<echo>Creating Identity Manager Provisioning Server Data Artifact</echo>
+				
+				<mkdir dir="${basedir}/deploy/prov-srv-data"/>
+					<mkdir dir="${basedir}/deploy/prov-srv-data/data"/>
+			                 <copy todir="${basedir}/deploy/prov-srv-data/data">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/data/"><exclude name="**/etrust_cosx.schema"/></fileset></copy>
+
+				
+				<copy file="${imps.root.dir}/eTADev/admin/data.sparc/core.schema" 
+				             todir="${basedir}/deploy/prov-srv-data/data"/>
+				<copy file="${imps.root.dir}/eTADev/admin/data.sparc/eta_domain.conf" 
+				             todir="${basedir}/deploy/prov-srv-data/data"/>
+				<copy file="${imps.root.dir}/installer/beans/com/ca/etrust/install/admin/data/eta_ops.conf" 
+				             todir="${basedir}/deploy/prov-srv-data/data"/>
+				<copy file="${imps.root.dir}/eTADev/admin/data.sparc/etrust_admin.conf" 
+				             todir="${basedir}/deploy/prov-srv-data/data"/>
+				<copy file="${imps.root.dir}/eTADev/admin/SME/DYN/etrust_dyn.schema" 
+				             todir="${basedir}/deploy/prov-srv-data/data"/>
+				<copy file="${imps.root.dir}/eTADev/admin/data.sparc/etrust_lds.conf" 
+				             todir="${basedir}/deploy/prov-srv-data/data"/>
+				<copy file="${imps.root.dir}/installer/beans/com/ca/etrust/install/admin/data/im_ccs.conf"
+					     todir="${basedir}/deploy/prov-srv-data/data"/>
+				<copy file="${imps.root.dir}/installer/beans/com/ca/etrust/install/admin/data/im_ps.conf" 
+				             todir="${basedir}/deploy/prov-srv-data/data"/>
+				<copy file="${imps.root.dir}/installer/common/regpath/reg_path.conf" 
+				             todir="${basedir}/deploy/prov-srv-data/data"/>
+				<copy file="${imps.root.dir}/eTADev/admin/SME/OS390Common/schema/cosine.schema" 
+				             todir="${basedir}/deploy/prov-srv-data/data"/>
+				<copy file="${imps.root.dir}/eTADev/admin/install/slapdconf/eTrustDirectory/data/etrust_cosx.schema" 
+				             todir="${basedir}/deploy/prov-srv-data/data"/>
+
+	
+
+
+			
+				<copy file="${imps.root.dir}/eTADev/admin/install/slapdconf/eTrustDirectory/data/etaops_notify.schema" 
+				             todir="${basedir}/deploy/prov-srv-data/data"/>
+				 <copy todir="${basedir}/deploy/prov-srv-data/data/tls">
+                             	<fileset dir="${imps.root.dir}/installer/beans/com/ca/etrust/install/admin/data/tls"/></copy>
+				
+
+				<mkdir dir="${basedir}/deploy/prov-srv-data/ldif"/>
+			       <copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/LDA-mk2/deploy"/></copy>
+				
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/AS400/deploy"/></copy>
+				
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/TSS/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/SQL/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/SBL/deploy"/></copy>
+				
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/RSA/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/PPS/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/PLS/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/ORA/deploy"/></copy>
+				
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/KRB/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/FND/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/EIAM/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/DBZ/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/DB2/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+				<fileset dir="${imps.root.dir}/eTADev/admin/SME/ACC/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/SAP/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/RAC/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/N16/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/LND/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/ACF/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/ADS/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/U16/ETC/deploy"/></copy>
+				<copy todir="${basedir}/deploy/prov-srv-data/ldif">
+                             <fileset dir="${imps.root.dir}/eTADev/admin/SME/U16/NIS/deploy"/></copy>
+
+
+
+		<echo>Updating eta_domain.conf</echo>
+
+                <replaceregexp byline="true">
+                <regexp pattern="cai"/>
+                <substitution expression="im"/>
+                <fileset dir="${basedir}/deploy/prov-srv-data/data/">
+                    <include name="eta_domain.conf"/>
+                </fileset>
+               </replaceregexp>
+
+
+			<echo>Updating etrust_admin.conf</echo>
+
+                <replaceregexp byline="true">
+                <regexp pattern="../"/>
+                <substitution expression="/opt/CA/IdentityManager/ProvisioningServer/"/>
+                <fileset dir="${basedir}/deploy/prov-srv-data/data/">
+                    <include name="etrust_admin.conf"/>
+                </fileset>
+               </replaceregexp>
+
+			<echo>Updating reg_path.conf</echo>
+
+                <!--replaceregexp byline="true">
+                <regexp pattern="AgentRegistry"/>
+                <substitution expression="Identity Manager\\\Provisioning Server"/>
+                <fileset dir="${basedir}/deploy/prov-srv-data/data/">
+                    <include name="reg_path.conf"/>
+                </fileset>
+               </replaceregexp-->
+
+
+		
+ 	        </tasks>
+      </configuration>
+	   <goals>
+        <goal>run</goal>
+      </goals>
+    </execution>
+  </executions>
+  <dependencies>
+ <dependency>
+    <groupId>ant</groupId>
+    <artifactId>ant-optional</artifactId>
+    <version>1.5.2</version>
+</dependency>
+ </dependencies>
+</plugin>
+<plugin>
+<groupId>com.google.code.maven-replacer-plugin</groupId>
+            <artifactId>replacer</artifactId>
+            <version>1.5.3</version>
+            <executions>                
+                <execution>
+                    <phase>test</phase>
+                    <goals>
+                        <goal>replace</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+			     <includes>
+				   <include>${basedir}/deploy/prov-srv-data/data/eta_ops.conf</include>
+				  <include>${basedir}/deploy/prov-srv-data/data/tls/client/ldap.conf</include>
+ 				   <include>${basedir}/deploy/prov-srv-data/data/tls/server/fips.conf</include>
+				   <include>${basedir}/deploy/prov-srv-data/data/im_ps.conf</include>
+				     <include>${basedir}/deploy/prov-srv-data/data/reg_path.conf</include>
+				   </includes> 
+                <replacements>
+			 <replacement>
+                        <token>AgentRegistry</token>
+                        <value>Identity Manager\\Provisioning Server</value>
+ 		    </replacement>
+			
+                    <replacement>
+                        <token>\[INSTALLDIR\]</token>
+                        <value>/opt/CA/IdentityManager/ProvisioningServer</value>
+ 		    </replacement>
+			<replacement>
+                        <token>\[FIPSMODE\]</token>
+                        <value>#TLS_ENABLEFIPS</value>
+ 		    </replacement>
+			<replacement>
+                        <token>\[ENABLEFIPSMODE\]</token>
+                        <value>#TLSEnableFipsMode</value>
+ 		    </replacement>
+		    <replacement>
+                        <token>\[LOGLEVEL\]</token>
+                        <value>64</value>
+ 		    </replacement>
+		    <replacement>
+                        <token>\[SIZELIMIT\]</token>
+                        <value>unlimited</value>
+ 		    </replacement>
+		    <replacement>
+                        <token>\[THREADS\]</token>
+                        <value>200</value>
+ 		    </replacement>
+			<replacement>
+                        <token>\[IDLETIMEOUT\]</token>
+                        <value>unlimited</value>
+ 		    </replacement>
+			<replacement>
+                        <token>\[DATAFOLDER\]</token>
+                        <value>/opt/CA/IdentityManager/ProvisioningServer/data</value>
+ 		    </replacement>
+			<replacement>
+                        <token>\[TLSRANDOMFILE\]</token>
+                        <value>/dev/urandom</value>
+ 		    </replacement>
+			<replacement>
+                        <token>\[SERVER_DNSUFFIX\]</token>
+                        <value>dc=eta</value>
+ 		    </replacement>
+			<replacement>
+                        <token>\[TIMELIMIT\]</token>
+                        <value>unlimited</value>
+ 		    </replacement>
+			<replacement>
+                        <token>\[REPOSITORY_PORT\]</token>
+                        <value>20391</value>
+ 		    </replacement>
+			<replacement>
+                        <token>\[CONNECTORSERVER_DNSUFFIX\]</token>
+                        <value>dc=etasa</value>
+ 		    </replacement>
+			<replacement>
+                        <token>\[ADMINSERVER_BACKENDLIB\]</token>
+                        <value>libeTrustAdminServer.so</value>
+ 		    </replacement>
+		<replacement>
+                        <token>\[REPOSITORY_DNSUFFIX\]</token>
+                        <value>dc=etadb</value>
+ 		    </replacement>
+             </replacements>   				
+            </configuration>
+        </plugin>
+
+
+
+<plugin>
+  <artifactId>maven-antrun-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>package-sources</id>
+      <phase>install</phase>
+      <configuration>
+        <tasks>
+		
+		    <echo>Zipping Files</echo>
+          		
+			  <delete file="${basedir}/deploy/prov-srv-data.tar.gz"/>
+			  
+			<tar destfile="${basedir}/deploy/prov-srv-data.tar" basedir="${basedir}/deploy"
+            excludes="**/build.properties,**/pom.xml,**/pom_automation.xml"/>
+				  
+		     <gzip destfile="${basedir}/deploy/prov-srv-data.tar.gz" src="${basedir}/deploy/prov-srv-data.tar"/>
+			
+			
+		        <delete file="${basedir}/deploy/prov-srv-data.tar"/>
+				
+				<copy file="${basedir}/deploy/prov-srv-data.tar.gz" 
+				            todir="/export/Docker/${im-release-version}"/>
+			
+   </tasks>
+      </configuration>
+	   <goals>
+        <goal>run</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+
+<!--plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-deploy-plugin</artifactId>
+    <version>2.6</version>
+    <goals>
+        <goal>deploy-file</goal>
+    </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc-dev.ca.com/artifactory/maven-release-local</url>
+        <artifactId>prov-srv-data</artifactId>
+        <groupId>com.ca.security.imag.docker-deploy</groupId>
+        <version>12.06.06-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Nipuna-Docker/prov-srv-data.tar.gz</file>
+    </configuration>
+</plugin-->
+</plugins>
+
+</build>
+</project>

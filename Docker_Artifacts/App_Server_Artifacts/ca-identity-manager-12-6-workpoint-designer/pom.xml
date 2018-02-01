@@ -1,0 +1,176 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	
+	
+    <groupId>com.ca.security.imag.docker-deploy</groupId>
+    <artifactId>Workpoint</artifactId>
+    <version>1.0.1-SNAPSHOTS</version>
+
+    
+	<build>
+	 
+	
+   	
+   <plugins>
+   <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+	<artifactId>properties-maven-plugin</artifactId>
+	<version>1.0-alpha-2</version>
+    <executions>
+      <execution>
+        <phase>test</phase>
+        <goals>
+          <goal>read-project-properties</goal>
+        </goals>
+        <configuration>
+          <files>
+            <file>../../docker-build.properties</file>
+          </files>
+        </configuration>
+      </execution>
+    </executions>
+  </plugin>
+  <plugin>
+  <artifactId>maven-antrun-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>generate-sources</id>
+      <phase>test</phase>
+      <configuration>
+        <tasks>
+		
+		
+			<echo>Creating Workpoint Designer Artifact</echo>
+								<!--change here-->
+				
+			<mkdir dir="${basedir}/deploy/Workpoint"/>
+			                 <copy todir="${basedir}/deploy/Workpoint/">
+                             <fileset dir="${root.dir}/etc/Workpoint"/></copy>
+							 <copy todir="${basedir}/deploy/workflowScripts/">
+                             <fileset dir="${root.dir}/etc/workflowScripts/"/></copy>
+							 
+							 
+				<unzip src="${basedir}/deploy/Workpoint/lib/wpCommon.jar" dest="${basedir}/deploy/Workpoint/lib/temp"/>
+							 <delete file="${basedir}/deploy/Workpoint/lib/wpCommon.jar"/>
+							 <delete file="${basedir}/deploy/Workpoint/lib/temp/com/workpoint/common/util/JNDILookup.properties"/>
+				             <copy file="${root.dir}/IdentityMinder-jboss7.ear/wpServer.jar/com/workpoint/common/util/JNDILookup.properties" 
+				             todir="${basedir}/deploy/Workpoint/lib/temp/com/workpoint/common/util/"/>
+							 <jar destfile="${basedir}/deploy/Workpoint/lib/wpCommon.jar" basedir="${basedir}/deploy/Workpoint/lib/temp/"/>
+							<delete dir="${basedir}/deploy/Workpoint/lib/temp"/>
+							 
+			
+							 
+		
+				
+			  
+			
+			
+		
+ 	        </tasks>
+      </configuration>
+	   <goals>
+        <goal>run</goal>
+      </goals>
+    </execution>
+  </executions>
+  <dependencies>
+ <dependency>
+    <groupId>ant</groupId>
+    <artifactId>ant-optional</artifactId>
+    <version>1.5.2</version>
+</dependency>
+ </dependencies>
+</plugin>
+
+ <plugin>
+            <groupId>com.google.code.maven-replacer-plugin</groupId>
+            <artifactId>replacer</artifactId>
+            <version>1.5.3</version>
+            <executions>                
+                <execution>
+                    <phase>test</phase>
+                    <goals>
+                        <goal>replace</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+			     <includes>
+				   <include>${basedir}/deploy/Workpoint/conf/workpoint-client.properties</include>
+				  
+				 </includes> 
+                <replacements>
+                    <replacement>
+                        <token>@application.name@</token>
+                        <value>${application.name}</value>
+                    </replacement>
+                    <replacement>
+                        <token>@file.jar.prefix@</token>
+                        <value>${file.jar.prefix}</value>
+                    </replacement>
+					<replacement>
+                        <token>@jndi.ejb@</token>
+                        <value>${jndi.ejb}</value>
+                    </replacement>
+				
+                </replacements>   				
+            </configuration>
+        </plugin>
+<plugin>
+  <artifactId>maven-antrun-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>package-sources</id>
+      <phase>install</phase>
+      <configuration>
+        <tasks>
+		
+		    <echo>Zipping Files</echo>
+          	  <delete file="${basedir}/deploy/workpoint.tar.gz"/>
+			  
+			<tar destfile="${basedir}/deploy/workpoint.tar" basedir="${basedir}/deploy"/>
+            
+				  
+		    <gzip destfile="${basedir}/deploy/workpoint.tar.gz" src="${basedir}/deploy/workpoint.tar"/>
+			
+			
+		        <delete file="${basedir}/deploy/workpoint.tar"/>
+				
+				<copy file="${basedir}/deploy/workpoint.tar.gz" 
+				            todir="/export/Docker/${im-release-version}"/>
+			
+   </tasks>
+      </configuration>
+	   <goals>
+        <goal>run</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>		
+<!--plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-deploy-plugin</artifactId>
+    <version>2.6</version>
+    <goals>
+        <goal>deploy-file</goal>
+    </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc-dev.ca.com/artifactory/maven-release-local</url>
+        <artifactId>workpoint</artifactId>
+        <groupId>com.ca.security.imag.docker-deploy</groupId>
+        <version>12.06.06-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Nipuna-Docker/workpoint.tar.gz</file>
+    </configuration>
+</plugin-->
+</plugins>
+
+</build>
+</project>

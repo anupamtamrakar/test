@@ -1,0 +1,127 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+<!--parent>
+	<groupId>com.ca.security.imag</groupId>  
+	<artifactId>Virtual_Appliance_IMAG</artifactId>  
+        <version>1.0</version>
+</parent-->
+
+    <modelVersion>4.0.0</modelVersion>
+	
+	
+    <groupId>com.ca.security.imag.docker-deploy</groupId>
+    <artifactId>ConXP</artifactId>
+    <version>1.0.1-SNAPSHOTS</version>
+
+    
+	<build>
+	 
+	
+   	
+   <plugins>
+   <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+	<artifactId>properties-maven-plugin</artifactId>
+	<version>1.0-alpha-2</version>
+    <executions>
+      <execution>
+        <phase>test</phase>
+        <goals>
+          <goal>read-project-properties</goal>
+        </goals>
+        <configuration>
+          <files>
+            <file>../../docker-build.properties</file>
+          </files>
+        </configuration>
+      </execution>
+    </executions>
+  </plugin>
+  
+  <plugin>
+  <artifactId>maven-antrun-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>generate-sources</id>
+      <phase>test</phase>
+      <configuration>
+        <tasks>
+		
+		
+			<echo>Creating Connector Express Binaries</echo>
+				
+				
+				 <copy file="${jcs-osgi.build}/inst/jcs-sdk-server.zip" 
+				             todir="${basedir}/deploy/ConnectorServerSDK"/>
+							 
+					<unzip src="${basedir}/deploy/ConnectorServerSDK/jcs-sdk-server.zip" dest="${basedir}/deploy/ConnectorServerSDK"/>
+					
+			 <delete file="${basedir}/deploy/ConnectorServerSDK/jcs-sdk-server.zip"/>
+
+
+					<mkdir dir="${basedir}/deploy/ConnectorServerSDK/logs"/>
+			               <copy file="${packaging.root}/installer/projects/soa-connector-server-sdk/default/SDK/ConnectorServerSDK/version.properties" 
+				             todir="${basedir}/deploy/ConnectorServerSDK"/>
+							 
+
+					 
+			
+				<!--change here-->
+				
+			
+			  <delete file="${basedir}/deploy/connector-srv-sdk.tar.gz"/>
+			  
+			<tar destfile="${basedir}/deploy/connector-srv-sdk.tar" basedir="${basedir}/deploy"
+            excludes="**/build.properties,**/pom.xml,**/pom_automation.xml"/>
+				  
+		     <gzip destfile="${basedir}/deploy/connector-srv-sdk.tar.gz" src="${basedir}/deploy/connector-srv-sdk.tar"/>
+			
+			
+		        <delete file="${basedir}/deploy/connector-srv-sdk.tar"/>
+				
+					<copy file="${basedir}/deploy/connector-srv-sdk.tar.gz" 
+				            todir="/export/Docker/${im-release-version}"/>
+ 	        </tasks>
+      </configuration>
+	   <goals>
+        <goal>run</goal>
+      </goals>
+    </execution>
+  </executions>
+  <dependencies>
+ <dependency>
+    <groupId>ant</groupId>
+    <artifactId>ant-optional</artifactId>
+    <version>1.5.2</version>
+</dependency>
+ </dependencies>
+</plugin>
+
+
+<!--plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-deploy-plugin</artifactId>
+    <version>2.6</version>
+    <goals>
+        <goal>deploy-file</goal>
+    </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc-dev.ca.com/artifactory/maven-release-local</url>
+        <artifactId>connector-srv-sdk</artifactId>
+        <groupId>com.ca.security.imag.docker-deploy</groupId>
+        <version>12.06.06-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Nipuna-Docker/connector-srv-sdk.tar.gz</file>
+    </configuration>
+</plugin-->
+</plugins>
+
+</build>
+</project>

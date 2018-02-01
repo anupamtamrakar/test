@@ -1,0 +1,240 @@
+
+
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	
+    <groupId>com.ca.security.imag.docker-deploy</groupId>
+    <artifactId>Docker-Artifacts</artifactId>
+    <version>1.0.1-SNAPSHOTS</version>
+
+    
+	<build>
+	 
+	
+   	
+   <plugins>
+	<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-deploy-plugin</artifactId>
+    <version>2.6</version>
+<executions>
+<execution>
+<id>first-execution</id>
+<phase>install</phase>
+	 <goals>
+        <goal>deploy-file</goal>
+       </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc.ca.com/artifactory/maven-release-candidate-local</url>
+        <artifactId>iam_data_volume</artifactId>
+        <groupId>com.ca.security.imag.${im_major_version}-${im_minor_version}-${im_sp_version}-docker-deploy</groupId>
+        <version>12.6.8-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Docker/IM-${im_major_version}-${im_minor_version}-${im_sp_version}/iam_data_volume.tar.gz</file>
+    </configuration>
+</execution>
+<execution>
+<id>second-execution</id>
+<phase>install</phase>
+	 <goals>
+        <goal>deploy-file</goal>
+       </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc.ca.com/artifactory/maven-release-candidate-local</url>
+        <artifactId>Automation_TEWS_Selenium</artifactId>
+        <groupId>com.ca.security.imag.${im_major_version}-${im_minor_version}-${im_sp_version}-docker-deploy</groupId>
+        <version>12.6.8-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Docker/IM-${im_major_version}-${im_minor_version}-${im_sp_version}/Automation_TEWS_Selenium.tar.gz</file>
+    </configuration>
+</execution>
+<execution>
+<id>third-execution</id>
+<phase>install</phase>
+	 <goals>
+        <goal>deploy-file</goal>
+       </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc.ca.com/artifactory/maven-release-candidate-local</url>
+        <artifactId>workpoint</artifactId>
+        <groupId>com.ca.security.imag.${im_major_version}-${im_minor_version}-${im_sp_version}-docker-deploy</groupId>
+        <version>12.6.8-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Docker/IM-${im_major_version}-${im_minor_version}-${im_sp_version}/workpoint.tar.gz</file>
+    </configuration>
+</execution>
+<execution>
+<id>fourth-execution</id>
+<phase>install</phase>
+	 <goals>
+        <goal>deploy-file</goal>
+       </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc.ca.com/artifactory/maven-release-candidate-local</url>
+        <artifactId>connector-express</artifactId>
+        <groupId>com.ca.security.imag.${im_major_version}-${im_minor_version}-${im_sp_version}-docker-deploy</groupId>
+        <version>12.6.8-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Docker/IM-${im_major_version}-${im_minor_version}-${im_sp_version}/connector_express.tar.gz</file>
+    </configuration>
+</execution>
+<execution>
+<id>fifth-execution</id>
+<phase>install</phase>
+	 <goals>
+        <goal>deploy-file</goal>
+       </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc.ca.com/artifactory/maven-release-candidate-local</url>
+        <artifactId>prov-srv-binaries</artifactId>
+        <groupId>com.ca.security.imag.${im_major_version}-${im_minor_version}-${im_sp_version}-docker-deploy</groupId>
+        <version>12.6.8-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Docker/IM-${im_major_version}-${im_minor_version}-${im_sp_version}/prov-srv-binaries.tar.gz</file>
+    </configuration>
+</execution>
+<execution>
+<id>sixth-execution</id>
+<phase>install</phase>
+	 <goals>
+        <goal>deploy-file</goal>
+       </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc.ca.com/artifactory/maven-release-candidate-local</url>
+        <artifactId>prov-srv-data</artifactId>
+        <groupId>com.ca.security.imag.${im_major_version}-${im_minor_version}-${im_sp_version}-docker-deploy</groupId>
+        <version>12.6.8-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Docker/IM-${im_major_version}-${im_minor_version}-${im_sp_version}/prov-srv-data.tar.gz</file>
+    </configuration>
+</execution>
+<execution>
+<id>seventh-execution</id>
+<phase>install</phase>
+	 <goals>
+        <goal>deploy-file</goal>
+       </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc.ca.com/artifactory/maven-release-candidate-local</url>
+        <artifactId>connector-srv-sdk</artifactId>
+        <groupId>com.ca.security.imag.${im_major_version}-${im_minor_version}-${im_sp_version}-docker-deploy</groupId>
+        <version>12.6.8-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Docker/IM-${im_major_version}-${im_minor_version}-${im_sp_version}/connector-srv-sdk.tar.gz</file>
+    </configuration>
+</execution>
+<execution>
+<id>eight-execution</id>
+<phase>install</phase>
+	 <goals>
+        <goal>deploy-file</goal>
+       </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc.ca.com/artifactory/maven-release-candidate-local</url>
+        <artifactId>jcs-binaries</artifactId>
+        <groupId>com.ca.security.imag.${im_major_version}-${im_minor_version}-${im_sp_version}-docker-deploy</groupId>
+        <version>12.6.8-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Docker/IM-${im_major_version}-${im_minor_version}-${im_sp_version}/jcs-binaries.tar.gz</file>
+    </configuration>
+</execution>
+<execution>
+<id>ninth-execution</id>
+<phase>install</phase>
+	 <goals>
+        <goal>deploy-file</goal>
+       </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc.ca.com/artifactory/maven-release-candidate-local</url>
+        <artifactId>jcs-data</artifactId>
+        <groupId>com.ca.security.imag.${im_major_version}-${im_minor_version}-${im_sp_version}-docker-deploy</groupId>
+        <version>12.6.8-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Docker/IM-${im_major_version}-${im_minor_version}-${im_sp_version}/jcs-data.tar.gz</file>
+    </configuration>
+</execution>
+<execution>
+<id>tenth-execution</id>
+<phase>install</phase>
+	 <goals>
+        <goal>deploy-file</goal>
+       </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc.ca.com/artifactory/maven-release-candidate-local</url>
+        <artifactId>jcs-ldif</artifactId>
+        <groupId>com.ca.security.imag.${im_major_version}-${im_minor_version}-${im_sp_version}-docker-deploy</groupId>
+        <version>12.6.8-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Docker/IM-${im_major_version}-${im_minor_version}-${im_sp_version}/jcs-ldif.tar.gz</file>
+    </configuration>
+</execution>
+<execution>
+<id>eleventh-execution</id>
+<phase>install</phase>
+	 <goals>
+        <goal>deploy-file</goal>
+       </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc.ca.com/artifactory/maven-release-candidate-local</url>
+        <artifactId>connector-metadata</artifactId>
+        <groupId>com.ca.security.imag.${im_major_version}-${im_minor_version}-${im_sp_version}-docker-deploy</groupId>
+        <version>12.6.8-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Docker/IM-${im_major_version}-${im_minor_version}-${im_sp_version}/connector-metadata.tar.gz</file>
+    </configuration>
+</execution>
+</executions>
+</plugin>
+</plugins>
+
+</build>
+</project>

@@ -1,0 +1,186 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+<!--parent>
+	<groupId>com.ca.security.imag</groupId>  
+	<artifactId>Virtual_Appliance_IMAG</artifactId>  
+        <version>1.0</version>
+</parent-->
+
+    <modelVersion>4.0.0</modelVersion>
+	
+	
+    <groupId>com.ca.security.imag.docker-deploy</groupId>
+    <artifactId>imps_server_bin</artifactId>
+    <version>1.0.1-SNAPSHOTS</version>
+
+    
+	<build>
+	 
+	
+   	
+   <plugins>
+   <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+	<artifactId>properties-maven-plugin</artifactId>
+	<version>1.0-alpha-2</version>
+    <executions>
+      <execution>
+        <phase>test</phase>
+        <goals>
+          <goal>read-project-properties</goal>
+        </goals>
+        <configuration>
+          <files>
+            <file>../../docker-build.properties</file>
+          </files>
+        </configuration>
+      </execution>
+    </executions>
+  </plugin>
+  
+ <plugin>
+  <artifactId>maven-antrun-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>generate-sources</id>
+      <phase>test</phase>
+      <configuration>
+        <tasks>
+		
+		
+			<echo>Creating Identity Manager Provisioning Server Binaries Artifact</echo>
+				
+				<mkdir dir="${basedir}/binaries/prov-srv-binaries"/>
+					<mkdir dir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/ACCNamespace.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/ACCRegister.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/AcfRegister.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/ADSOptExits.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/analyzelog.exe" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/back_lds.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/caetamsg.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/caetapam.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/calndcpy.exe" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/configuration.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/csfconfig.exe" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/csfconfigmsg.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/Db2Namespace.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/DB2Register.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/DBZNamespace.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/DYNNamespace.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/dynregister.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/E2K7PS.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/E2K7WinService.exe" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/E2K7WinService.exe.config" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/EIAMNamespace.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/EndpointMetadata.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/EnumServices.exe" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/eta-env.exe" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/etaattrmap.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/etachmap.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/etaclapi.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/etaip.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/etaldap.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/etaldap_backend.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/etalog.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/EtaNotifyTools.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/etapttut.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/etaptycc.exe" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/etasoapexit.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/etatools.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/etautil.exe" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/etavlapi.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/etavlcor.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/FNDNamespace.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/FNDRegister.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/ldifpop.exe" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/LNDRegister.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/N16Namespace.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/ORARegister.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/Os390Common.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/Os390Msg.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/PLSGetPasswd.exe" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/PLSNamespace.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/PLSRegister.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/RacRegister.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/RSANamespace.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/Sample_IM_CORP_USER.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/Sample_IM_PMC.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/SAPNamespaceMsg.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/SAPRegister.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/SBLNamespace.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/schemagen.exe" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/SetUserCannotResetPwdFlag.exe" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/SQLRegister.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/SuperagentBack.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/TssRegister.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/uetacldap.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/uetavlapi.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/uetavlcor.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/uetaxml.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/W2KNamespace.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/binr/W2KRegister.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+		
+						<copy file="${imps.root.dir}/eTADev/admin/SME/PLS/AGENT/memco/data/enu.msg" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						
+						<copy file="${imps.root.dir}/eTADev/admin/SME/PLS/AGENT/memco/DLL/Etacws.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/SME/PLS/AGENT/memco/DLL/Etsso.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/SME/PLS/AGENT/memco/DLL/Etwac.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						<copy file="${imps.root.dir}/eTADev/admin/SME/PLS/AGENT/memco/DLL/Etwac_Admin.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+			
+						<copy file="${imps.root.dir}/eTADev/admin/SME/PLS/AGENT/memco/DLL/Etacws.dll" todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+						
+						<zip destfile="${basedir}/binaries/prov-srv-win-binaries.zip" basedir="${basedir}/binaries"
+            excludes="**/build.properties,**/pom.xml"/>
+
+								<!--<gzip destfile="${basedir}/binaries/prov-srv-win-binaries.tar.gz" src="${basedir}/binaries/prov-srv-win-binaries.tar"/>
+
+
+								<delete file="${basedir}/binaries/prov-srv-win-binaries.zip"/>-->
+
+								<copy file="${basedir}/binaries/prov-srv-win-binaries.zip" 
+				            todir="\\im-bld-arc\ExportDir\archive\Docker\${im-release-version}"/>
+ 	        </tasks>
+      </configuration>
+	   <goals>
+        <goal>run</goal>
+      </goals>
+    </execution>
+  </executions>
+  <dependencies>
+ <dependency>
+    <groupId>ant</groupId>
+    <artifactId>ant-optional</artifactId>
+    <version>1.5.2</version>
+</dependency>
+ </dependencies>
+</plugin>
+
+
+<!--plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-deploy-plugin</artifactId>
+    <version>2.6</version>
+    <goals>
+        <goal>deploy-file</goal>
+    </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc-dev.ca.com/artifactory/maven-release-local</url>
+        <artifactId>prov-srv-binaries</artifactId>
+        <groupId>com.ca.security.imag.docker-deploy</groupId>
+        <version>12.06.06-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Nipuna-Docker/prov-srv-binaries.tar.gz</file>
+    </configuration>
+</plugin-->
+</plugins>
+
+</build>
+</project>

@@ -1,0 +1,149 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	
+	
+    <groupId>com.ca.security.imag.docker-deploy</groupId>
+    <artifactId>jcs_ldif</artifactId>
+    <version>1.0.1-SNAPSHOTS</version>
+
+    
+	<build>
+	 
+	
+   	
+   <plugins>
+   <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+	<artifactId>properties-maven-plugin</artifactId>
+	<version>1.0-alpha-2</version>
+    <executions>
+      <execution>
+        <phase>test</phase>
+        <goals>
+          <goal>read-project-properties</goal>
+        </goals>
+        <configuration>
+          <files>
+            <file>../../docker-build.properties</file>
+          </files>
+        </configuration>
+      </execution>
+    </executions>
+  </plugin>
+  
+ <plugin>
+  <artifactId>maven-antrun-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>generate-sources</id>
+      <phase>test</phase>
+      <configuration>
+        <tasks>
+		
+		
+			<echo>Creating Java Connector Server LDIF files Artifact</echo>
+				
+				<mkdir dir="${basedir}/deploy/jcs-ldif/"/>
+			                 <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/racfirrdbu00/build/dist/_uninst/"/></copy>
+							   <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/unix/build/dist/_uninst/"/></copy>
+							   <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/sapume/build/dist/_uninst/"/></copy>
+							   <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/racf/build/dist/_uninst/"/></copy>
+							   <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/sdkws/build/dist/_uninst/"/></copy>
+							   <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/dlp/build/dist/_uninst/"/></copy>
+							   <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/sdkfs/build/dist/_uninst/"/></copy>
+							   <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/o365/build/dist/_uninst/"/></copy>
+							  <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/sdkuposcript/build/dist/_uninst/"/></copy>
+							  <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/acf2/build/dist/_uninst/"/></copy>
+							  <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/sdkcompound/build/dist/_uninst/"/></copy>
+							   <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/acf2acfesage/build/dist/_uninst/"/></copy>
+							   <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/arcot/build/dist/_uninst/"/></copy>
+							   <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/sfdc/build/dist/_uninst/"/></copy>
+							<copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/scim/build/dist/_uninst/"/></copy>
+							 <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/sdkscript/build/dist/_uninst/"/></copy>
+							 <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/tsscfile/build/dist/_uninst/"/></copy>
+							 <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/tss/build/dist/_uninst/"/></copy>
+							 <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/rsa7/build/dist/_uninst/"/></copy>
+							  <!--copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/gab/build/dist/_uninst/"/></copy-->
+							  <copy todir="${basedir}/deploy/jcs-ldif">
+                             <fileset dir="${jcs.connectors}/sdkdyn/build/dist/_uninst/"/></copy>
+
+				
+				<!--change here-->
+				
+			
+			  <delete file="${basedir}/deploy/jcs-ldif.tar.gz"/>
+			  
+			<tar destfile="${basedir}/deploy/jcs-ldif.tar" basedir="${basedir}/deploy"
+            excludes="**/build.properties,**/pom.xml"/>
+				  
+		     <gzip destfile="${basedir}/deploy/jcs-ldif.tar.gz" src="${basedir}/deploy/jcs-ldif.tar"/>
+			
+			
+		        <delete file="${basedir}/deploy/jcs-ldif.tar"/>
+				
+					<copy file="${basedir}/deploy/jcs-ldif.tar.gz" 
+				            todir="/export/Docker/${im-release-version}"/>
+ 	        </tasks>
+      </configuration>
+	   <goals>
+        <goal>run</goal>
+      </goals>
+    </execution>
+  </executions>
+  <dependencies>
+ <dependency>
+    <groupId>ant</groupId>
+    <artifactId>ant-optional</artifactId>
+    <version>1.5.2</version>
+</dependency>
+ </dependencies>
+</plugin>
+
+
+<!--plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-deploy-plugin</artifactId>
+    <version>2.6</version>
+    <goals>
+        <goal>deploy-file</goal>
+    </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc-dev.ca.com/artifactory/maven-release-local</url>
+        <artifactId>jcs-ldif</artifactId>
+        <groupId>com.ca.security.imag.docker-deploy</groupId>
+        <version>12.06.06-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>${basedir}/deploy/jcs-ldif.tar.gz</file>
+    </configuration>
+</plugin-->
+</plugins>
+
+</build>
+</project>

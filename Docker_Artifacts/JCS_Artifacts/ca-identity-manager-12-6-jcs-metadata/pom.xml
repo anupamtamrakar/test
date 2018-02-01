@@ -1,0 +1,190 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	
+	
+    <groupId>com.ca.security.imag.docker-deploy</groupId>
+    <artifactId>jcs_metadata</artifactId>
+    <version>1.0.1-SNAPSHOTS</version>
+
+    
+	<build>
+  
+   <plugins>
+   <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+	<artifactId>properties-maven-plugin</artifactId>
+	<version>1.0-alpha-2</version>
+    <executions>
+      <execution>
+        <phase>test</phase>
+        <goals>
+          <goal>read-project-properties</goal>
+        </goals>
+        <configuration>
+          <files>
+            <file>../../docker-build.properties</file>
+          </files>
+        </configuration>
+      </execution>
+    </executions>
+  </plugin>
+  
+   <plugin>
+  <artifactId>maven-antrun-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>generate-sources</id>
+      <phase>test</phase>
+      <configuration>
+        <tasks>
+		
+		
+			<echo>Creating Java Connector Server Metadata</echo>
+				
+				<mkdir dir="${basedir}/deploy/system/com/ca/jcs"/>
+				
+							 <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/common/build/inst/system/com/ca/jcs/"/></copy>
+							  <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/scim/build-layer7/inst/system/com/ca/jcs/"/></copy>
+							  <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/as400/build/inst/system/com/ca/jcs/"/></copy>
+							 <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/scim/build-zendesk/inst/system/com/ca/jcs/"/></copy>
+							   <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/tss/build/inst/system/com/ca/jcs/"/></copy>
+							 <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/lnd/build/inst/system/com/ca/jcs/"/></copy>
+							    <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/racf/build/inst/system/com/ca/jcs/"/></copy>
+							 <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/arcot/build/inst/system/com/ca/jcs/"/></copy>
+							 <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/dlp/build/inst/system/com/ca/jcs/"/></copy>
+							 <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/krbscript/build/inst/system/com/ca/jcs/"/></copy>
+							    <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/scim/build-googleapps/inst/system/com/ca/jcs/"/></copy>
+							 <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/rsa7/build/inst/system/com/ca/jcs/"/></copy>
+							 <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/csvemailsender/build/inst/system/com/ca/jcs/"/></copy>
+							  <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/jndi/build/inst/system/com/ca/jcs/"/></copy>
+							  
+<copy todir="${basedir}/deploy/system/com/ca/jcs/jcs-connector-jdbc">
+                             <fileset dir="${jcs-osgi.connectors}/jdbc/build/inst/system/com/ca/jcs/jcs-connector-jdbc"/></copy>
+							 	   
+
+							  <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/scim/build-azure/inst/system/com/ca/jcs/"/></copy>
+							    <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/scim/build-box/inst/system/com/ca/jcs/"/></copy>
+							  <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/o365/build/inst/system/com/ca/jcs/"/></copy>
+							 	   <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/pps/build/inst/system/com/ca/jcs/"/></copy>
+							   <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/acf2/build/inst/system/com/ca/jcs/"/></copy>
+							  <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/sap/build/inst/system/com/ca/jcs/"/></copy>
+							 <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/scim/build-servicenow/inst/system/com/ca/jcs/"/></copy>
+							 <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/sql/build/inst/system/com/ca/jcs/"/></copy>
+							 <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/ora/build/inst/system/com/ca/jcs/"/></copy>
+							  <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/csproxy/build/inst/system/com/ca/jcs/"/></copy>
+							 <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/tsscfile/build/inst/system/com/ca/jcs/"/></copy>
+							  <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/scim/build/inst/system/com/ca/jcs/"/></copy>
+							 <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/sfdc/build/inst/system/com/ca/jcs/"/></copy>
+							  <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/sapume/build/inst/system/com/ca/jcs/"/></copy>
+							 <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/racfirrdbu00/build/inst/system/com/ca/jcs/"/></copy>
+							 <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/csv/build/inst/system/com/ca/jcs/"/></copy>
+							 <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/unix/build/inst/system/com/ca/jcs/"/></copy>
+							  <copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/acf2acfesage/build/inst/system/com/ca/jcs/"/></copy>
+ 							  <!--copy todir="${basedir}/deploy/system/com/ca/jcs">
+                             <fileset dir="${jcs-osgi.connectors}/gab/build/inst/system/com/ca/jcs/"/></copy-->
+							 
+							 
+	
+
+												 
+							 
+					<mkdir dir="${basedir}/deploy/lib"/>
+							<copy todir="${basedir}/deploy/lib">
+                            <fileset dir="${jcs-osgi.build}/apache-servicemix-4.3.1-fuse-00-00/lib/"/></copy>
+							<copy todir="${basedir}/deploy/lib/ext/">
+                            <fileset dir="${jcs.connectors}/lnd/lib_dev_only/"/></copy>
+							
+							
+							
+					
+
+				<!--change here-->
+				
+			
+			  <delete file="${basedir}/deploy/connector-metadata.tar.gz"/>
+			  
+			<tar destfile="${basedir}/deploy/connector-metadata.tar" basedir="${basedir}/deploy"/>
+				  
+		     <gzip destfile="${basedir}/deploy/connector-metadata.tar.gz" src="${basedir}/deploy/connector-metadata.tar"/>
+			
+			
+		        <delete file="${basedir}/deploy/connector-metadata.tar"/>
+				
+				<copy file="${basedir}/deploy/connector-metadata.tar.gz" 
+				            todir="/export/Docker/${im-release-version}"/>
+ 	        </tasks>
+      </configuration>
+	   <goals>
+        <goal>run</goal>
+      </goals>
+    </execution>
+  </executions>
+  <dependencies>
+ <dependency>
+    <groupId>ant</groupId>
+    <artifactId>ant-optional</artifactId>
+    <version>1.5.2</version>
+</dependency>
+ </dependencies>
+</plugin>
+
+
+<!--plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-deploy-plugin</artifactId>
+    <version>2.6</version>
+    <goals>
+        <goal>deploy-file</goal>
+    </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc-dev.ca.com/artifactory/maven-release-local</url>
+        <artifactId>connector-metadata</artifactId>
+        <groupId>com.ca.security.imag.12-6-06-docker-deploy</groupId>
+        <version>12.06.06-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>./deploy/connector-metadata.tar.gz</file>
+    </configuration>
+</plugin-->
+</plugins>
+
+</build>
+</project>

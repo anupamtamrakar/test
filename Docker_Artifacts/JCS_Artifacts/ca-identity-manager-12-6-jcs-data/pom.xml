@@ -1,0 +1,231 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	
+	
+    <groupId>com.ca.security.imag.docker-deploy</groupId>
+    <artifactId>jcs_data</artifactId>
+    <version>1.0.1-SNAPSHOTS</version>
+
+    
+	<build>
+	 
+	
+   	
+   <plugins>
+   <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+	<artifactId>properties-maven-plugin</artifactId>
+	<version>1.0-alpha-2</version>
+    <executions>
+      <execution>
+        <phase>test</phase>
+        <goals>
+          <goal>read-project-properties</goal>
+        </goals>
+        <configuration>
+          <files>
+            <file>../../docker-build.properties</file>
+          </files>
+        </configuration>
+      </execution>
+    </executions>
+  </plugin>
+  
+ <plugin>
+  <artifactId>maven-antrun-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>generate-sources</id>
+      <phase>test</phase>
+      <configuration>
+        <tasks>
+		
+		
+			<echo>Creating Java Connector Server Data</echo>
+				
+				<mkdir dir="${basedir}/deploy/conf/override/"/>
+			                 <copy todir="${basedir}/deploy/conf/override">
+                             <fileset dir="${jcs.root.dir}/jcs/conf/override"><exclude name="**/SAMPLE.server_shared.properties"/></fileset></copy>
+
+				<rename src="${basedir}/deploy/conf/override/SAMPLE.server_ad.properties" dest="${basedir}/deploy/conf/override/server_ad.properties"/>
+
+				<rename src="${basedir}/deploy/conf/override/SAMPLE.server_ccs.properties" dest="${basedir}/deploy/conf/override/server_ccs.properties"/>
+
+				<rename src="${basedir}/deploy/conf/override/SAMPLE.server_jcs.properties" dest="${basedir}/deploy/conf/override/server_jcs.properties"/>
+
+
+				<rename src="${basedir}/deploy/conf/override/SAMPLE.server_ui.properties" dest="${basedir}/deploy/conf/override/server_ui.properties"/>
+
+							
+			
+
+			<echo>Updating conf/override/server_ui.properties</echo>
+			  <replaceregexp byline="true">
+                <regexp pattern="#endpointManagementService.managementVisible=false"/>
+                <substitution expression="endpointManagementService.managementVisible=@endpointManagementService_managementVisible@"/>
+                <fileset dir="${basedir}/deploy/conf/override/">
+                    <include name="server_ui.properties"/>
+                </fileset>
+               </replaceregexp>	
+
+
+		<echo>Updating conf/override/server_ad.properties</echo>
+			
+
+		
+
+	
+
+		<replaceregexp byline="true">
+                <regexp pattern="#configuration"/>
+                <substitution expression="configuration"/>
+                <fileset dir="${basedir}/deploy/conf/override/">
+                    <include name="server_ad.properties"/>
+                </fileset>
+               </replaceregexp>
+
+	<propertyfile file="${basedir}/deploy/conf/override/server_ad.properties">
+    <entry  key="JsafeJCE.fipsEnabled" value="@jcs_fips_enabled@"/>
+    </propertyfile>
+
+
+		<propertyfile file="${basedir}/deploy/conf/override/server_ad.properties">
+    <entry  key="configuration.ldapsCertificateFile" value="/opt/CA/IdentityManager/ConnectorServer/jcs/conf/ssl.keystore"/>
+    </propertyfile>
+
+	<propertyfile file="${basedir}/deploy/conf/override/server_ad.properties">
+    <entry  key="configuration.ldapsCertificatePassword" value="@jcs_jmsCredentials_password@"/>
+    </propertyfile>
+
+	<propertyfile file="${basedir}/deploy/conf/override/server_ad.properties">
+    <entry  key="configuration.ldapPort" value="20410"/>
+    </propertyfile>
+
+	<propertyfile file="${basedir}/deploy/conf/override/server_ad.properties">
+    <entry  key="configuration.ldapsPort" value="20411"/>
+    </propertyfile>
+
+
+
+		<echo>Updating conf/override/server_ccs.properties</echo>
+
+			
+		<propertyfile
+    file="${basedir}/deploy/conf/override/server_ccs.properties"
+    comment="server_ccs.properties">
+  <entry  key="ccsWindowsController.ccsScriptPath" value="bin"/>
+  <entry  key="proxyCCSManager.startupWait" value="30"/>
+ <entry  key="proxyCCSManager.controller.ref" value="ccsNullController"/>
+  <entry  key="proxyConnectionConfig.proxyServerHostname" value="@proxyConnectionConfig_proxyServerHostname@"/>
+ <entry  key="proxyConnectionConfig.proxyServerPort" value="20403"/>
+  <entry  key="proxyConnectionConfig.proxyServerUser" value="cn=root,dc=etasa"/>
+<entry  key="proxyConnectionConfig.proxyServerUseSsl" value="@proxyConnectionConfig_proxyServerUseSsl@"/>
+<entry  key="proxyConnectionConfig.proxyServerPassword" value="@jcs_jmsCredentials_password@"/>
+<entry  key="proxyCCSManager.enabled" value="@proxyCCSManager_enabled@"/>
+              </propertyfile>
+
+<replaceregexp file="${basedir}/deploy/conf/override/server_ccs.properties" match="cn\\=root,dc\\=etasa" replace="cn=root,dc=etasa" byline="true" />
+
+
+		<echo>Updating conf/override/server_jcs.properties</echo>
+
+		
+		<replaceregexp byline="true">
+                <regexp pattern="#connectorManager.connectorClientCertStore"/>
+                <substitution expression="connectorManager.connectorClientCertStore"/>
+                <fileset dir="${basedir}/deploy/conf/override/">
+                    <include name="server_jcs.properties"/>
+                </fileset>
+               </replaceregexp>
+
+				<replaceregexp byline="true">
+                <regexp pattern="#connectorManager.connectorClientCertStoreType"/>
+                <substitution expression="connectorManager.connectorClientCertStoreType"/>
+                <fileset dir="${basedir}/deploy/conf/override/">
+                    <include name="server_jcs.properties"/>
+                </fileset>
+               </replaceregexp>
+
+
+				<propertyfile
+    file="${basedir}/deploy/conf/override/server_jcs.properties"
+    comment="#server_jcs.properties#">
+  <entry  key="connectorManager.connectorServerCertStore" value="../conf/ssl.keystore"/>
+  <entry  key="connectorManager.connectorServerCertStoreType" value="JKS"/>
+ <entry  key="connectorManager.connectorServerCertStorePassword" value="@jcs_jmsCredentials_password@"/>
+ <entry  key="connectorManager.connectorClientCertStorePassword" value="@jcs_jmsCredentials_password@"/>
+ <entry  key="JsafeJCE.fipsEnabled" value="@JsafeJCE_fipsEnabled@"/>
+ <entry  key="httpProxyConfiguration.enabled" value="@httpProxyConfiguration_enabled@"/>
+
+  <entry  key="#connectorManager.connectorSSLSimple" value="true"/>
+  <entry  key="#connectorManager.connectorSSLTrace" value="false"/>
+ <entry  key="#connectorManager.connectorSSLVerifyPeer" value="false"/>
+ <entry  key="#connectorFactory.allowMetadataModifyGlobally" value="false"/>
+<entry  key="#httpProxyConfiguration.proxyServers.1.ref" value="httpProxyAlternate1"/>
+ <entry  key="#httpProxyAlternate1.host" value="155.35.248.109"/>
+  </propertyfile>
+
+<replaceregexp file="${basedir}/deploy/conf/override/server_jcs.properties" match="\\#" replace="#" byline="true" />
+
+
+
+							
+				<!--change here-->
+				
+			
+			  <delete file="${basedir}/deploy/jcs-data.tar.gz"/>
+			  
+			<tar destfile="${basedir}/deploy/jcs-data.tar" basedir="${basedir}/deploy"
+            excludes="**/build.properties,**/pom.xml"/>
+				  
+		     <gzip destfile="${basedir}/deploy/jcs-data.tar.gz" src="${basedir}/deploy/jcs-data.tar"/>
+			
+			
+		        <delete file="${basedir}/deploy/jcs-data.tar"/>
+				
+					<copy file="${basedir}/deploy/jcs-data.tar.gz" 
+				            todir="/export/Docker/${im-release-version}"/>
+ 	        </tasks>
+      </configuration>
+	   <goals>
+        <goal>run</goal>
+      </goals>
+    </execution>
+  </executions>
+  <dependencies>
+ <dependency>
+    <groupId>ant</groupId>
+    <artifactId>ant-optional</artifactId>
+    <version>1.5.2</version>
+</dependency>
+ </dependencies>
+</plugin>
+
+
+<!--plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-deploy-plugin</artifactId>
+    <version>2.6</version>
+    <goals>
+        <goal>deploy-file</goal>
+    </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc-dev.ca.com/artifactory/maven-release-local</url>
+        <artifactId>jcs-data</artifactId>
+        <groupId>com.ca.security.imag.docker-deploy</groupId>
+        <version>12.06.06-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Nipuna-Docker/jcs-data.tar.gz</file>
+    </configuration>
+</plugin-->
+</plugins>
+
+</build>
+</project>

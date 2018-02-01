@@ -1,0 +1,191 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+<!--parent>
+	<groupId>com.ca.security.imag</groupId>  
+	<artifactId>Virtual_Appliance_IMAG</artifactId>  
+        <version>1.0</version>
+</parent-->
+
+    <modelVersion>4.0.0</modelVersion>
+	
+	
+    <groupId>com.ca.security.imag.docker-deploy</groupId>
+    <artifactId>imps_server</artifactId>
+    <version>1.0.1-SNAPSHOTS</version>
+
+    
+	<build>
+	 
+	
+   	
+   <plugins>
+   <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+	<artifactId>properties-maven-plugin</artifactId>
+	<version>1.0-alpha-2</version>
+    <executions>
+      <execution>
+        <phase>test</phase>
+        <goals>
+          <goal>read-project-properties</goal>
+        </goals>
+        <configuration>
+          <files>
+            <file>../../docker-build.properties</file>
+          </files>
+        </configuration>
+      </execution>
+    </executions>
+  </plugin>
+  
+ <plugin>
+  <artifactId>maven-antrun-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>generate-sources</id>
+      <phase>test</phase>
+      <configuration>
+        <tasks>
+		
+		
+			<echo>Creating Identity Manager Provisioning Server Binaries Artifact</echo>
+				
+				<mkdir dir="${basedir}/binaries/prov-srv-binaries"/>
+					<mkdir dir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/lib"/>
+			                 <copy todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/lib">
+                             		<fileset dir="${imps.root.dir}/eTADev/admin/lib"/></copy>
+					 <copy todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/lib">
+                             		<fileset dir="${imps.root.dir}/eTADev/opt/src/boost/1.39.0/lib/linux_x86_gnu-4.1.2_release/"><exclude name="**/libboost_date_time.so.1.39.0"/></fileset></copy>
+						<copy todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/lib">
+                             		<fileset dir="${imps.root.dir}/eTADev/opt/src/xercesc/2.8.0/lib/linux"/></copy>
+							<copy todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/lib">
+                             		<fileset dir="${imps.root.dir}/opt.Linux/src/libcurl-7.37.1/lib"/></copy>
+								<copy todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/lib">
+                             		<fileset dir="${imps.root.dir}/eTADev/opt/src/zlib/1.2.3/lib/linux"/></copy>
+					<copy todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/lib">
+                             		<fileset dir="${imps.root.dir}/opt.Linux/src/etpki/3.2.1/lib"/></copy>
+					<copy file="${imps.root.dir}/opt.Linux/src/etpki/4.3.4/Linux/x86/32/lib/libcapki_thread_posix.so" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/lib"/>
+							 <copy file="${imps.root.dir}/opt.Linux/src/caldap.r12/lib/libsi.so.4" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/lib"/>
+							  <copy file="${imps.root.dir}/opt.Linux/src/caldap.r12/lib/libldap.so.3" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/lib"/>
+							  <copy file="${imps.root.dir}/opt.Linux/src/caldap.r12/lib/liblber.so.3" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/lib"/>
+							  <copy file="${imps.root.dir}/opt.Linux/src/caldap.r12/lib/back_ldap.so" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/lib"/>
+					<mkdir dir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+			               
+			
+					<copy file="${imps.root.dir}/eTADev/admin/bin/etaptycc" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+					<copy file="${imps.root.dir}/eTADev/admin/bin/dumpptt" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+					<copy file="${imps.root.dir}/eTADev/admin/bin/analyzelog" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+					<copy file="${imps.root.dir}/eTADev/admin/bin/eta-env" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+					<copy file="${imps.root.dir}/eTADev/admin/bin/etautil" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+					<copy file="${imps.root.dir}/eTADev/admin/bin/bindeta" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+					<copy file="${imps.root.dir}/eTADev/admin/bin/pingeta" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+					<copy file="${imps.root.dir}/eTADev/admin/bin/ldifpop" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+					<copy file="${imps.root.dir}/eTADev/admin/bin/pwdmgr" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+					<copy file="${imps.root.dir}/eTADev/admin/bin/schemagen" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+					<copy file="${imps.root.dir}/eTADev/admin/bin/csfconfig" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+					<copy file="${imps.root.dir}/eTADev/admin/bin/etadailybatch" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+					<copy file="${imps.root.dir}/eTADev/admin/bin/etacreateouglobalgroups" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+					<copy file="${imps.root.dir}/eTADev/admin/bin/etaloadnotificationconf" 
+				             todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin"/>
+
+
+
+                                        <copy todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin">
+                                        <fileset dir="${imps.root.dir}/opt.Linux/src/caldap.r12/bin"/></copy>
+					<copy todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/bin">
+                                        <fileset dir="${imps.root.dir}/eTADev/admin/SME/ACC/samples/change_eac_password/unix"/></copy>
+
+					<mkdir dir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/Linux"/>
+					<copy todir="${basedir}/binaries/prov-srv-binaries/ProvisioningServer/Linux">
+                             		<fileset dir="${imps.root.dir}/opt.Linux/src/etpki/4.3.5/Linux"/></copy>
+
+
+					<mkdir dir="${basedir}/binaries/prov-srv-binaries/SharedComponents"/>	                 
+ 					 <copy todir="${basedir}/binaries/prov-srv-binaries/SharedComponents/lib">
+                           		 <fileset dir="${imps.root.dir}/opt.Linux/src/ecs/custom_gcc4/lib/"><exclude name="**/libcawvapi.so"/><exclude name="**/libsqlite3.so"/><exclude name="**/libcatngdb.so"/><exclude name="**/libcatngrep.so"/></fileset></copy>
+					<mkdir dir="${basedir}/binaries/prov-srv-binaries/SharedComponents/EnterpriseCommonServices"/>
+			                 <copy todir="${basedir}/binaries/prov-srv-binaries/SharedComponents/EnterpriseCommonServices">
+                            		 <fileset dir="${ECS.dir}"><exclude name="**/log/**"/><exclude name="**/tmp/**"/></fileset></copy>
+					 <copy todir="${basedir}/binaries/prov-srv-binaries/SharedComponents/EnterpriseCommonServices/ETPKI/lib">
+                           		 <fileset dir="${imps.root.dir}/opt.Linux/src/etpki/3.2.1/lib"/></copy>//change here
+					<mkdir dir="${basedir}/binaries/prov-srv-binaries/SharedComponents/CAPKI/Linux"/>
+					<copy todir="${basedir}/binaries/prov-srv-binaries/SharedComponents/CAPKI/Linux">
+                             		<fileset dir="${imps.root.dir}/opt.Linux/src/etpki/4.3.4/Linux"/></copy>
+			
+				<!--change here-->
+				
+			
+			  <delete file="${basedir}/binaries/prov-srv-binaries.tar.gz"/>
+			  
+			<tar destfile="${basedir}/binaries/prov-srv-binaries.tar" basedir="${basedir}/binaries"
+            excludes="**/build.properties,**/pom.xml"/>
+				  
+		     <gzip destfile="${basedir}/binaries/prov-srv-binaries.tar.gz" src="${basedir}/binaries/prov-srv-binaries.tar"/>
+			
+			
+		        <delete file="${basedir}/binaries/prov-srv-binaries.tar"/>
+				
+				<copy file="${basedir}/binaries/prov-srv-binaries.tar.gz" 
+				            todir="/export/Docker/${im-release-version}"/>
+ 	        </tasks>
+      </configuration>
+	   <goals>
+        <goal>run</goal>
+      </goals>
+    </execution>
+  </executions>
+  <dependencies>
+ <dependency>
+    <groupId>ant</groupId>
+    <artifactId>ant-optional</artifactId>
+    <version>1.5.2</version>
+</dependency>
+ </dependencies>
+</plugin>
+
+
+<!--plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-deploy-plugin</artifactId>
+    <version>2.6</version>
+    <goals>
+        <goal>deploy-file</goal>
+    </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc-dev.ca.com/artifactory/maven-release-local</url>
+        <artifactId>prov-srv-binaries</artifactId>
+        <groupId>com.ca.security.imag.docker-deploy</groupId>
+        <version>12.06.06-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Nipuna-Docker/prov-srv-binaries.tar.gz</file>
+    </configuration>
+</plugin-->
+</plugins>
+
+</build>
+</project>

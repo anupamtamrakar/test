@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.ca.security.imag</groupId>  
+	<artifactId>Virtual_Appliance_IMAG</artifactId>  
+        <version>1.0</version>  
+	<name>Docker-Artifacts</name>
+	<packaging>pom</packaging>
+
+  	<modules>
+		<module>/ca-identity-manager-12-6-appsrv</module>
+        <module>/ca-identity-manager-12-6-tews-automation</module>
+		<module>/ca-identity-manager-12-6-workpoint-designer</module>
+</modules>
+</project>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <servers>
+    <server>
+      <id>central</id>
+          <username>cambuild</username>
+          <password>{LfH6mRzjJIAHisP8wdJqxOfjIWELwhQ04Di5SOQ3hNo=}</password>
+    </server>
+    <server>
+      <username>cambuild</username>
+      <id>snapshots</id>
+    </server>
+  </servers>
+  <profiles>
+    <profile>
+      <repositories>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+          <id>central</id>
+          <name>repo</name>
+          <url>http://isl-dsdc.ca.com/artifactory/maven-release-candidate-local</url>
+        </pluginRepository>
+        <pluginRepository>
+          <snapshots />
+          <id>snapshots</id>
+          <name>repo</name>
+          <url>http://isl-dsdc.ca.com/artifactory/maven-release-candidate-local</url>
+        </pluginRepository>
+      </pluginRepositories>
+      <id>artifactory</id>
+    </profile>
+  </profiles>
+  <!--activeProfiles>
+    <activeProfile>artifactory</activeProfile>
+  </activeProfiles-->
+</settings>
