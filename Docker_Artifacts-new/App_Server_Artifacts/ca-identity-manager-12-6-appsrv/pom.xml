@@ -1,0 +1,493 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	
+	
+    <groupId>com.ca.security.imag.docker-deploy</groupId>
+    <artifactId>jboss_app_server</artifactId>
+    <version>1.0.1-SNAPSHOTS</version>
+
+  
+	
+	
+	<build>
+	 
+	
+   	
+   <plugins>
+   <plugin>
+    <groupId>org.codehaus.mojo</groupId>
+	<artifactId>properties-maven-plugin</artifactId>
+	<version>1.0-alpha-2</version>
+    <executions>
+      <execution>
+        <phase>test</phase>
+        <goals>
+          <goal>read-project-properties</goal>
+        </goals>
+        <configuration>
+          <files>
+            <file>../../docker-build.properties</file>
+          </files>
+        </configuration>
+      </execution>
+    </executions>
+  </plugin>
+ 	
+  <plugin>
+  <artifactId>maven-antrun-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>generate-sources</id>
+      <phase>test</phase>
+      <configuration>
+        <tasks>
+					
+		<!--echo> Test the property ${root.dir}</echo>
+			<echo> Test the property ${modules.dir}</echo>
+			<echo> Test the property ${finalVersion}</echo-->
+			<taskdef resource="net/sf/antcontrib/antlib.xml" 
+					classpathref="maven.plugin.classpath" />
+		   
+			 <mkdir dir="${basedir}/deploy/castylesr5.1.1.ear"/>
+			                 <copy todir="${basedir}/deploy/castylesr5.1.1.ear/">
+                             <fileset dir="${root.dir}/castylesr5.1.1.ear/"/></copy>
+							 
+			 <mkdir dir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear"/>
+			        <mkdir dir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/ca-nim-sm.war"/>
+					         <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/ca-nim-sm.war/">
+                             <fileset dir="${root.dir}/IdentityMinder.ear/ca-nim-sm.war"/></copy>
+							 
+		            <mkdir dir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/config"/>
+				             <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/config/">
+                             <fileset dir="${root.dir}/identitymanager/ear/config/"/></copy>
+			                 <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/config/">
+                             <fileset dir="${root.dir}/IdentityMinder.ear/config/"/></copy>
+						     <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/config/">
+                             <fileset dir="${root.dir}/IdentityMinder-jboss7.ear/config/"/></copy>
+							 
+				    <mkdir dir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/custom"/>
+				             <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/custom/">
+                             <fileset dir="${root.dir}/identitymanager/ear/custom/"/></copy>
+                             <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/custom/">
+                             <fileset dir="${root.dir}/IdentityMinder.ear/custom/"/></copy>		
+							 
+				    <mkdir dir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/${product.prefix1}_${product.prefix2}_identityminder_ejb.jar"/>
+							 <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/${product.prefix1}_${product.prefix2}_identityminder_ejb.jar/">
+                             <fileset dir="${root.dir}/IdentityMinder-jboss7.ear/identityminder_ejb.jar/"/></copy>	
+				             <copy file="${root.dir}/IdentityMinder.ear/identityminder_ejb.jar/META-INF/MANIFEST.MF" 
+				             todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/${product.prefix1}_${product.prefix2}_identityminder_ejb.jar/META-INF"/>
+							 
+				    <mkdir dir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/${product.prefix1}_${product.prefix2}_wpServer.jar"/>
+					        <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/${product.prefix1}_${product.prefix2}_wpServer.jar/">
+                             <fileset dir="${root.dir}/IdentityMinder.ear/wpServer.jar/"><exclude name="**/JNDILookup.properties"/></fileset></copy>	
+							 <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/${product.prefix1}_${product.prefix2}_wpServer.jar/">
+                             <fileset dir="${root.dir}/IdentityMinder-jboss7.ear/wpServer.jar"/></copy>
+							 
+				    <mkdir dir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/library"/>
+					        <!--copy todir="${basedir}/deploy/${product.prefix1}_im.ear/library/">
+                             <fileset dir="${root.dir}/identitymanager/ear/library/"/></copy-->
+						    <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/library/">
+                             <fileset dir="${root.dir}/IdentityMinder.ear/library/"> <exclude name="**/cryptojFIPS.jar"/></fileset></copy>
+							<!--wpcommon jar-->		 
+							 <unzip src="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/library/wpCommon.jar" dest="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/library/temp"/>
+							 <delete file="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/library/wpCommon.jar"/>
+							 <delete file="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/library/temp/com/workpoint/common/util/JNDILookup.properties"/>
+				             <copy file="${root.dir}/IdentityMinder-jboss7.ear/wpServer.jar/com/workpoint/common/util/JNDILookup.properties" 
+				             todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/library/temp/com/workpoint/common/util/"/>
+							 <jar destfile="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/library/wpCommon.jar" basedir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/library/temp"/>
+							<delete dir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/library/temp"/>
+							 
+							 
+							 
+					<mkdir dir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/manage_redirect.war"/>
+					         <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/manage_redirect.war/">
+                             <fileset dir="${root.dir}/install/resources/redirect.war/"/></copy>
+							 
+				    <mkdir dir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/management_console.war"/>
+					         <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/management_console.war/">
+                             <fileset dir="${root.dir}/identitymanager/ear/management_console.war/"/></copy>
+					         <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/management_console.war/">
+                             <fileset dir="${root.dir}/IdentityMinder.ear/management_console.war/"/></copy>
+							  <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/management_console.war/">
+                             <fileset dir="${root.dir}/IdentityMinder-jboss7.ear/management_console.war/"/></copy>
+							 
+				             <!--copy file="${root.dir}/IdentityMinder-jboss7.ear/management_console.war/WEB-INF/context.xml" 
+				             todir="${basedir}/deploy/${product.prefix1}_im.ear/management_console.war/WEB-INF"/-->
+							 
+				    <mkdir dir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/META-INF"/>
+					         <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/META-INF/">
+                             <fileset dir="${root.dir}/IdentityMinder-jboss7.ear/META-INF/"/></copy>
+				<!--mkdir dir="${basedir}/deploy/${product.prefix1}_im.ear/odata.war"/>
+				<copydir src="${root.dir}/IdentityMinder.ear/odata.war" 
+				         dest="${basedir}/deploy/${product.prefix1}_im.ear/odata.war"/-->
+						 
+			    	<mkdir dir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/policyserver.rar"/>
+				             <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/policyserver.rar/">
+                             <fileset dir="${root.dir}/IdentityMinder-jboss7.ear/policyserver.rar/"/></copy>
+							  <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/policyserver.rar/">
+                             <fileset dir="${root.dir}/IdentityMinder.ear/policyserver.rar/"><exclude name="**/ra.xml"/></fileset></copy>
+							 
+			        <mkdir dir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/redirect.war"/>
+					         <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/redirect.war/">
+                             <fileset dir="${root.dir}/install/resources/redirect.war/"/></copy>
+							 
+				    <mkdir dir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/user_console.war/xinha096b2"/>
+					         <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/user_console.war/">
+                             <fileset dir="${root.dir}/IdentityMinder.ear/user_console.war/"/></copy>
+							 <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/user_console.war/">
+                             <fileset dir="${root.dir}/IdentityMinder-jboss7.ear/user_console.war/"/></copy>
+							 <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/user_console.war/xinha096b2/">
+                             <fileset dir="${root.dir}/identitymanager/ear/user_console.war/xinha096b2/"/></copy> 
+							 <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/user_console.war/">
+                             <fileset dir="${imroot.dir}/ear/user_console.war"><exclude name="**/xinha096b2"/></fileset></copy> 
+							  <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/user_console.war/WEB-INF/lib/">
+                             <fileset dir="${conman.dir}/role-gen-output/"/></copy><!--latest-->
+							 
+				    <mkdir dir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/workflow.rar/META-INF"/>		
+					<mkdir dir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/workflow.rar/wp_config"/>
+                             <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/workflow.rar/wp_config/">
+                             <fileset dir="${root.dir}/IdentityMinder.ear/workflow.rar/wp_config/"/></copy>		
+							 <copy file="${root.dir}/IdentityMinder.ear/workflow.rar/META-INF/MANIFEST.MF" 
+				             todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/workflow.rar/META-INF"/>
+							 <copy todir="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/workflow.rar/META-INF">
+                             <fileset dir="${root.dir}/IdentityMinder-jboss7.ear/workflow.rar/META-INF"/></copy>	
+							 
+		    <mkdir dir="${basedir}/deploy/modules"/>
+				    <mkdir dir="${basedir}/deploy/modules/com/ca/${product.prefix1}/crypto/main"/>	
+				             <copy file="${root.dir}/IdentityMinder.ear/library/cryptojFIPS.jar" 
+				             todir="${basedir}/deploy/modules/com/ca/${product.prefix1}/crypto/main"/>
+				             <copy file="${modules.dir}/module_crpytojFIPS.xml" 
+				             todir="${basedir}/deploy/modules/com/ca/${product.prefix1}/crypto/main"/>
+				<move file="${basedir}/deploy/modules/com/ca/${product.prefix1}/crypto/main/module_crpytojFIPS.xml" tofile="${basedir}/deploy/modules/com/ca/${product.prefix1}/crypto/main/module.xml"/>
+				
+		            <mkdir dir="${basedir}/deploy/modules/com/ca/${product.prefix1}/idmutils/main"/>	
+		                     <copy file="${root.dir}/IdentityMinder.ear/library/idmutils.jar" 
+				             todir="${basedir}/deploy/modules/com/ca/${product.prefix1}/idmutils/main"/>
+				             <copy file="${modules.dir}/module_idmutils.xml" 
+				             todir="${basedir}/deploy/modules/com/ca/${product.prefix1}/idmutils/main"/>
+				<move file="${basedir}/deploy/modules/com/ca/${product.prefix1}/idmutils/main/module_idmutils.xml" tofile="${basedir}/deploy/modules/com/ca/${product.prefix1}/idmutils/main/module.xml"/>
+				
+		<!--mkdir dir="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/derby/main"/>	
+		  <copy file="${root.dir}/install/lib/jdbcdrivers/derby.jar" 
+				      todir="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/derby/main"/>
+				<copy file="${modules.dir}/module_derbyjdbc.xml" 
+				      todir="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/derby/main"/>
+				<rename src="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/derby/main/module_derbyjdbc.xml" dest="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/derby/main/module.xml"/-->
+				
+				
+		    <mkdir dir="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/microsoft/main"/>	
+		                    <copy file="${root.dir}/install/lib/jdbcdrivers/sqljdbc.jar" 
+				            todir="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/microsoft/main"/>
+				            <copy file="${modules.dir}/module_sqljdbc.xml" 
+				            todir="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/microsoft/main"/>
+				<move file="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/microsoft/main/module_sqljdbc.xml" tofile="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/microsoft/main/module.xml"/>
+				
+				
+		<mkdir dir="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/oracle/main"/>	
+		                    <copy file="${root.dir}/install/lib/jdbcdrivers/ojdbc7.jar" 
+				            todir="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/oracle/main"/>
+				            <copy file="${modules.dir}/module_ojdbc7.jar.xml" 
+				            todir="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/oracle/main"/>
+				<move file="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/oracle/main/module_ojdbc7.jar.xml" tofile="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/oracle/main/module.xml"/>
+				
+				
+		<mkdir dir="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/mysql/main"/>	
+		  <copy file="${mysql.dir}/mysql-connector-java-5.1.17-bin.jar" 
+				      todir="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/mysql/main"/>
+				<copy file="${mysql.module.dir}/module.xml" 
+				      todir="${basedir}/deploy/modules/com/ca/${product.prefix1}/jdbc/mysql/main"/>
+					
+<!--Adding files for CABI support-->	
+
+		<mkdir dir="${basedir}/deploy/modules/com/rsa/main"/>	
+		  <copy file="${root.dir}/IdentityMinder.ear/library/cryptojFIPS.jar" 
+				      todir="${basedir}/deploy/modules/com/rsa/main"/>
+			<copy file="${cabijar.dir}/biek-4.1/bcm.jar" 
+				      todir="${basedir}/deploy/modules/com/rsa/main"/>
+				<!--copy file="${mysql.module.dir}/module_rsa.xml" 
+				      todir="${basedir}/deploy/modules/com/rsa/main"/>
+				<move file="${basedir}/deploy/modules/com/rsa/main/module_rsa.xml" tofile="${basedir}/deploy/modules/com/rsa/main/module.xml"/-->
+					  
+		   <echo message="Adding alias_iam_imAnalyticsNotificationQueue_queue in idm_jndi_names.properties"/>			
+			 <propertyfile file="${basedir}/deploy/iam_im.ear/config/idm_jndi_names.properties">
+			 <entry  key="alias_iam_imAnalyticsNotificationQueue_queue" value="iam/im/jms/queue/analytics/AnalyticsNotificationQueue"/>  
+			</propertyfile>
+            
+			
+				<echo>Updating Workpoint-client.properties</echo>
+			  <replaceregexp byline="true">
+                <regexp pattern="log4j.appender.WCSysOut.Target=System.out"/>
+                <substitution expression="log4j.appender.WCSysOut.Target=${jboss-log}/System.out"/>
+                <fileset dir="${basedir}/deploy/iam_im.ear/config/">
+                    <include name="workpoint-client.properties"/>
+                </fileset>
+               </replaceregexp>
+			   
+			   <replaceregexp byline="true">
+                <regexp pattern="log4j.appender.WCFile1.File=Designer.log"/>
+                <substitution expression="log4j.appender.WCFile1.File=${jboss-log}/Designer.log"/>
+                <fileset dir="${basedir}/deploy/iam_im.ear/config/">
+                    <include name="workpoint-client.properties"/>
+                </fileset>
+               </replaceregexp>
+
+
+			   
+			   
+		    <echo message="Updating jboss-ejb3.xml" />
+            <taskdef name="xmltask"
+             classname="com.oopsconsultancy.xmltask.ant.XmlTask"
+             classpathref="maven.plugin.classpath"/>
+         <xmltask source="${basedir}/deploy/iam_im.ear/iam_im_wpServer.jar/META-INF/jboss-ejb3.xml" dest="${basedir}/deploy/iam_im.ear/iam_im_wpServer.jar/META-INF/jboss-ejb3.xml"> 
+           <insert path="//*[local-name()='ejb-jar']/*[local-name()='enterprise-beans']/*[local-name()='message-driven']/*[local-name()='activation-config']" position="under"> 
+              <![CDATA[ 
+             <activation-config-property> 
+            <activation-config-property-name>clientFailureCheckPeriod</activation-config-property-name> 
+            <activation-config-property-value>600000</activation-config-property-value> 
+            </activation-config-property> 
+			 <activation-config-property> 
+            <activation-config-property-name>connectionTTL</activation-config-property-name> 
+            <activation-config-property-value>-1</activation-config-property-value> 
+            </activation-config-property> 
+            ]]> 
+           </insert> 
+         </xmltask> 
+			 <!--xmltask source="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/policyserver.rar/META-INF/ra.xml" dest="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/policyserver.rar/META-INF/ra.xml"> 
+           <remove path="//*[local-name()='connector']/*[local-name()='resourceadapter']/*[local-name()='config-property']/*[local-name()='config-property-value']"> 
+           </remove> 
+		   </xmltask-->
+		   <xmltask source="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/policyserver.rar/META-INF/ra.xml" dest="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/policyserver.rar/META-INF/ra.xml">
+   <replace path ="/connector/resourceadapter/config-property[1]/config-property-value/text()" 
+        withText="@Validate_SMHeaders_with_PS@"/>
+         </xmltask>  
+		 
+ <xmltask source="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/policyserver.rar/META-INF/ra.xml" dest="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/policyserver.rar/META-INF/ra.xml">
+   <replace path ="/connector/resourceadapter/config-property[2]/config-property-value/text()" 
+        withText="@Enabled@"/>
+         </xmltask>  
+
+		  <xmltask source="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/policyserver.rar/META-INF/ra.xml" dest="${basedir}/deploy/${product.prefix1}_${product.prefix2}.ear/policyserver.rar/META-INF/ra.xml">
+   <replace path ="/connector/resourceadapter/config-property[4]/config-property-value/text()" 
+        withText="@hostname@,@port1@,@port2@,@port3@"/>
+         </xmltask>  
+		 
+				
+				    <delete file="${basedir}/deploy/${product.prefix1}_data_volume.tar.gz"/>
+			
+				 
+				
+        </tasks>
+      </configuration>
+	   <goals>
+        <goal>run</goal>
+      </goals>
+    </execution>
+  </executions>
+  <dependencies>
+ <dependency>
+    <groupId>ant</groupId>
+    <artifactId>ant-optional</artifactId>
+    <version>1.5.2</version>
+	</dependency>
+	 <dependency>
+         <groupId>com.oopsconsultancy</groupId>
+         <artifactId>xmltask</artifactId>
+         <version>1.16</version>
+       </dependency>
+    </dependencies>
+	
+</plugin>
+ 
+        <plugin>
+            <groupId>com.google.code.maven-replacer-plugin</groupId>
+            <artifactId>replacer</artifactId>
+            <version>1.5.3</version>
+            <executions>                
+                <execution>
+                    <phase>test</phase>
+                    <goals>
+                        <goal>replace</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+			     <includes>
+				   <include>${basedir}/deploy/iam_im.ear/config/idm_jndi_names.properties</include>
+				   <include>${basedir}/deploy/iam_im.ear/META-INF/application.xml</include>
+                   <include>${basedir}/deploy/iam_im.ear/config/iam_application.properties</include>
+				   <include>${basedir}/deploy/iam_im.ear/config/quartz.properties</include>
+				    <include>${basedir}/deploy/iam_im.ear/config/workpoint-client.properties</include>
+					<include>${basedir}/deploy/iam_im.ear/policyserver.rar/META-INF/ra.xml</include>
+					<include>${basedir}/deploy/iam_im.ear/config/com/netegrity/config/appserver.properties</include>
+					<include>${basedir}/deploy/iam_im.ear/config/com/netegrity/config/generic_appserver.properties</include>
+					<include>${basedir}/deploy/iam_im.ear/config/com/netegrity/config/jboss_appserver.properties</include>
+					<include>${basedir}/deploy/iam_im.ear/config/com/netegrity/config/weblogic_appserver.properties</include>
+					<include>${basedir}/deploy/iam_im.ear/config/com/netegrity/config/websphere_appserver.properties</include>
+	
+					
+					<include>${basedir}/deploy/iam_im.ear/iam_im_identityminder_ejb.jar/META-INF/jboss-ejb3.xml</include>
+					<include>${basedir}/deploy/iam_im.ear/iam_im_wpServer.jar/META-INF/ibm-ejb-jar-bnd.xmi</include>
+					<include>${basedir}/deploy/iam_im.ear/iam_im_wpServer.jar/META-INF/jboss.xml</include>
+					<include>${basedir}/deploy/iam_im.ear/iam_im_wpServer.jar/META-INF/jboss-ejb3.xml</include>
+					<include>${basedir}/deploy/iam_im.ear/manage_redirect.war/WEB-INF/web.xml</include>
+					<include>${basedir}/deploy/iam_im.ear/redirect.war/WEB-INF/web.xml</include>
+				   </includes>
+                <replacements>
+                    <replacement>
+                        <token>@user.context.root@</token>
+                        <value>${user.context.root}</value>
+                    </replacement>
+                    <replacement>
+                        <token>@management.context.root@</token>
+                        <value>${management.context.root}</value>
+                    </replacement>
+					<replacement>
+                        <token>@nim.context.root@</token>
+                        <value>${nim.context.root}</value>
+                    </replacement>
+					<replacement>
+                        <token>@jndi.jdbc@</token>
+                        <value>${jndi.jdbc}</value>
+                    </replacement>
+                    <replacement>
+                        <token>@jndi.jms.topic@</token>
+                        <value>${jndi.jms.topic}</value>
+                    </replacement>
+					<replacement>
+                        <token>@jndi.ra@</token>
+                        <value>${jndi.ra}</value>
+                    </replacement>
+					<replacement>
+                        <token>@jndi.jms.queue@</token>
+                        <value>${jndi.jms.queue}</value>
+                    </replacement>
+					<replacement>
+                        <token>@application.name@</token>
+                        <value>${application.name}</value>
+                    </replacement>
+					<replacement>
+                        <token>@file.jar.prefix@</token>
+                        <value>${file.jar.prefix}</value>
+                    </replacement>
+					<replacement>
+                        <token>@HOSTNAME</token>
+                        <value>${HOSTNAME}</value>
+                    </replacement>
+					<replacement>
+                        <token>@USERNAME</token>
+                        <value>${user_name}</value>
+                    </replacement>
+					<replacement>
+                        <token>@PASSWORD</token>
+                        <value>${PASSWORD}</value>
+                    </replacement>
+					<replacement>
+                        <token>@AGENTNAME</token>
+                        <value>${AGENTNAME}</value>
+                    </replacement>
+					<replacement>
+                        <token>@AGENTSECRET</token>
+                        <value>${AGENTSECRET}</value>
+                    </replacement>
+					<replacement>
+                        <token>@jndi.mail@</token>
+                        <value>${jndi.mail}</value>
+                    </replacement>
+					<replacement>
+                        <token>@jndi.ejb@</token>
+                        <value>${jndi.ejb}</value>
+                    </replacement>
+					<replacement>
+                        <token>@jndi.jms.factory@</token>
+                        <value>${jndi.jms.factory}</value>
+                    </replacement>
+					<replacement>
+                        <token>@new.ear.app.root@</token>
+                        <value>${new.ear.app.root}</value>
+                    </replacement>
+					<replacement>
+                        <token>@old.ear.app.root@</token>
+                        <value>${old.ear.app.root}</value>
+                    </replacement>
+                </replacements>   				
+            </configuration>
+        </plugin>
+		
+<plugin>
+  <artifactId>maven-antrun-plugin</artifactId>
+  <executions>
+    <execution>
+      <id>package-sources</id>
+      <phase>install</phase>
+      <configuration>
+        <tasks>
+		
+		    <echo>hello</echo>
+            <tar destfile="${basedir}/deploy/${product.prefix1}_data_volume.tar" basedir="${basedir}/deploy"
+            excludes="**/build.properties,**/pom.xml"/>
+				  
+		    <gzip destfile="${basedir}/deploy/${product.prefix1}_data_volume.tar.gz" src="${basedir}/deploy/${product.prefix1}_data_volume.tar"/>
+				 
+		    <delete file="${basedir}/deploy/${product.prefix1}_data_volume.tar"/>
+			
+			
+			<copy file="${basedir}/deploy/${product.prefix1}_data_volume.tar.gz" 
+				            todir="/export/Docker/${im-release-version}"/>
+			
+			
+   </tasks>
+      </configuration>
+	   <goals>
+        <goal>run</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>
+<!--plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>check-release-maven-plugin</artifactId>
+        <version>1.1.0</version>
+        <configuration>
+           <repoUrl>http://isl-dsdc-dev.ca.com/artifactory/maven-release-local</repoUrl>
+        </configuration>
+</plugin-->
+<!--plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-deploy-plugin</artifactId>
+    <version>2.6</version>
+    <goals>
+        <goal>deploy-file</goal>
+    </goals>
+    <configuration>
+        <repositoryId>central</repositoryId>
+		<id>central</id>
+        <packaging>tar.gz</packaging>
+        <generatePom>true</generatePom>
+        <url>http://isl-dsdc-dev.ca.com/artifactory/maven-release-local</url>
+        <artifactId>iam_data_volume</artifactId>
+        <groupId>com.ca.security.imag.docker-deploy</groupId>
+        <version>12.06.06-SNAPSHOTS-${finalVersion}</version>
+		<uniqueVersion>false</uniqueVersion>
+        <file>/export/Nipuna-Docker/iam_data_volume.tar.gz</file>
+    </configuration>
+</plugin-->
+
+</plugins>
+</build>
+<!--distributionManagement>
+        <repository>
+            <id>central</id>
+        <url>https://isl-dsdc-dev.ca.com/artifactory/repo</url>
+		</repository>
+    </distributionManagement-->
+  <pluginRepositories>
+      <pluginRepository>
+         <id>xmltask</id>
+         <url>http://maven.atlassian.com/repository/public</url>
+		 </pluginRepository>
+   </pluginRepositories>
+	
+</project>
